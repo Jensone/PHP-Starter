@@ -1,6 +1,10 @@
 <?php
 
 use PHPMailer\PHPMailer\PHPMailer;
+
+//Load Composer's autoloader
+require 'vendor/autoload.php';
+
 /**
  * Traitement du formulaire de prise de RDV pour le coach sportif
  * 1 - Récolter les données du formulaire [OK]
@@ -49,23 +53,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     
     // Envoi du mail au coach
-    $phpmailer = new PHPMailer();
-    $phpmailer->isSMTP();
-    $phpmailer->Host = 'sandbox.smtp.mailtrap.io';
-    $phpmailer->SMTPAuth = true;
-    $phpmailer->Port = 2525;
-    $phpmailer->Username = 'e8a98412438662';
-    $phpmailer->Password = 'e41ad837e4d83f';
-    
-    // Message du mail
+    function newMailCoaching($sender, $receiver, $content, $subject) {
+        $phpmailer = new PHPMailer();
+        $phpmailer->isSMTP();
+        $phpmailer->Host = 'sandbox.smtp.mailtrap.io';
+        $phpmailer->SMTPAuth = true;
+        $phpmailer->Port = 2525;
+        $phpmailer->Username = 'e8a98412438662';
+        $phpmailer->Password = 'e41ad837e4d83f';
 
-    // Envoi du mail
+        var_dump($sender, $receiver, $content, $subject);
+        // Expéditeur et destinataire
+        $phpmailer->setFrom($sender['email'], 'Coach');
+        $phpmailer->addAddress($receiver['email'], 'Client');
+
+        // Contenu du mail
+        $phpmailer->isHTML(true); 
+        $phpmailer->Subject = $subject;
+        $phpmailer->Body    = $content;
+
+        $phpmailer->send();
+    }
+    
+    // Messages du mail
+    $coach = [
+        "email" => "coach@fitnesspark.com",
+        "subject" => "Nouveau RDV avec {$nom}",
+        "message" => "Nouveau RDV de coaching",
+    ];
+
+    newMailCoaching($coach['email'], $coach['email'], $coach['message'], $coach['subject']);
+
+    $client = [
+        "email" => $email,
+        "subject" => "Votre RDV de coaching",
+        "message" => "Validation de votre réservation",
+    ];
+
+    newMailCoaching($coach['email'], $client['email'], $client['message'], $client['subject']);
     
     // Confirmation de l'envoi
     
-    
-    var_dump($errors);
-
 } else {
     header("Location: index.php");
 }

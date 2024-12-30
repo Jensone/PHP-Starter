@@ -9,5 +9,7 @@
             "email": "hello@jensone.com"
         }
     ],
-    "require": {}
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
 }

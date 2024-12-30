@@ -1,0 +1,13 @@
+{
+    "name": "jensone/php-starter",
+    "description": "From JS to PHP",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jensone",
+            "email": "hello@jensone.com"
+        }
+    ],
+    "require": {}
+}

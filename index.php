@@ -1,84 +1,59 @@
-<?php
-// VARIABLES & CONSTANTS
-$nom = "Martin";
-const SURNAME = "Matin";
-
-// echo $nom . ' ' . SURNAME;
-
-// TYPES
-/**
- * string = "Martin"
- * integer = 20
- * float = 23.44405555
- * decimal(5,2) = 999.99
- * boolean = true or false
- * array = [$nom,20.55,"Martin"]
- * object = new stdClass()
- * text, varchar = Liés à une BDD
- */
-
-// FUNCTIONS
-function totalTva(
-    int $ht, // 57
-    int $tva,  // 20
-    int $qt, // 10
-    int $promo // 0
-    ): int 
-{
-    $totalHt = $ht * $qt;
-    // CONDITIONS
-    if ($promo > 0) { $totalHt = $totalHt * $promo; }
-    
-    $totalTva = $totalHt * $tva / 100;
-    return $totalTva + $totalHt;
-}
-
-// echo totalTva(57, 20, 10, 0);
-
-// CONDITIONS
-if (1 == 0) {
-    echo "Le monde est à l'envers";
-}
-
-$annee = new DateTime('now');
-//echo $annee->format('Y') === '2025' ? " Bonne année 2025 🎉" : "Ce n'est pas encore 2025";
-
-// CLASSES & OBJECTS
-class User 
-{
-    // Attributs = Propriétés = Variables dans la classe
-    public string $nom;
-    public string $prenom;
-    public string $metier;
-
-    //  Mutateur = Setters, c'est une Méthode (fonction)
-    public function setNom(string $nom)
-    {
-        // $this fait référence à l'objet en cours, ici issue de la classe User
-        $this->nom = $nom;
-        return $this; // Ici on retoune l'information à l'objet
-    }
-    public function setPrenom(string $prenom)
-    {
-        $this->prenom = $prenom;
-        return $this;
-    }
-    public function setMetier(string $metier)
-    {
-        $this->metier = $metier;
-        return $this;
-    }
-}
-
-$user = new User(); // Instanciation d'un objet issu de la classe User
-// Hydration de l'objet $user
-$user
-    ->setNom('Martin')
-    ->setPrenom('Matin')
-    ->setMetier('Chaudronnier')
-    ;
-
-// Débogage de l'objet $user
-var_dump($user);
+<?php 
 
 ?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach Sportif</title>
+    <link rel="shortcut icon" href="https://api.iconify.design/material-symbols:sports-handball.svg?color=%23000000" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Coach Sportif</h1>
+        <p>Bienvenue sur ma page de prise de RDV</p>
+
+        <article>
+            <header>
+                <p align="center">
+                    Remplissez le formulaire ci-dessous pour réserver votre séance de sport
+                </p>
+            </header>
+            <form action="/process.php" method="POST">
+                <fieldset>
+                    <legend>Informations de votre séance</legend>
+                    <label for="date">Date</label>
+                    <input type="date" id="date" name="date" >
+                    <label for="lieu">Lieu</label>
+                    <select id="lieu" name="lieu" required>
+                        <option value="FitnessPark Paris Rambuteau">FitnessPark Paris Rambuteau</option>
+                        <option value="FitnessPark Paris Gare de Lyon">FitnessPark Paris Gare de Lyon</option>
+                        <option value="FitnessPark Saint-Ouen">FitnessPark Saint-Ouen</option>
+                        <option value="FitnessPark Paris Chatelêt">FitnessPark Paris Chatelêt</option>
+                    </select>
+                    <label for="heure">Heure</label>
+                    <input type="time" id="heure" name="heure" value="10:00" required>
+                </fieldset>
+                <fieldset>
+                    <legend>Vos informations de contact</legend>
+                    <label for="nom">Nom</label>
+                    <input type="text" id="nom" name="nom" value="Martin" required>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" value="martin@gmail.com" required>
+                    <label for="telephone">Téléphone</label>
+                    <input type="tel" id="telephone" name="telephone" value="0123456789" required>
+                </fieldset>
+                <button type="submit">Valider</button>
+            </form>
+            <footer>
+                <p align="center">
+                    Une validation de votre séance sera envoyée à votre adresse email
+                </p>
+            </footer>
+        </article>
+    </main>
+</body>
+</html>

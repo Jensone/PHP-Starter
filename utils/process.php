@@ -4,6 +4,7 @@ require '../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use Symfony\Component\Dotenv\Dotenv;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $date = $_POST['date'] ?? '';
@@ -54,12 +55,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ) {
         $mail = new PHPMailer(true); // Objet PHPMailer
         try {
+            // .env info
+            $dotenv = new Dotenv();
+            $dotenv->loadEnv(__DIR__ . '/../.env');
+
             $mail->isSMTP();
             $mail->Host = 'sandbox.smtp.mailtrap.io';
             $mail->SMTPAuth = true;
             $mail->Port = 2525;
-            $mail->Username = 'XXXXXXXXXXXX';
-            $mail->Password = 'XXXXXXXXXXXX';
+            $mail->Username = $_ENV["MAILTRAP_USERNAME"];
+            $mail->Password = $_ENV["MAILTRAP_PASSWORD"];
 
             $mail->setFrom($sender, 'Coach');
             $mail->addAddress($receiver);

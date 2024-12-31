@@ -4,9 +4,13 @@ $title = "Accueil";
 $description = "Coach Sportif, page de prise de RDV pour des séance de sport chez FitnessPark";
 
 $modal = ''; // Déclaration de la variable modal
-if (isset($_SESSION)) { // Est-ce que SESSION est définie ?
+
+session_start();
+
+if (isset($_SESSION['errors'])) { // Est-ce que SESSION est définie ?
     if (count($_SESSION['errors']) > 0) { // Errrors contient des données ?
         $modal = './modals/errors.php'; // Oui, on affiche le modal Error
+        session_destroy();
     }
 };
 

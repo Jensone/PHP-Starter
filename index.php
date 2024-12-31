@@ -1,5 +1,17 @@
 <?php 
 
+$modal = ''; // Déclaration de la variable modal
+
+if (isset($_SESSION)) { // Est-ce que SESSION est définie ?
+    if (count($_SESSION['errors']) > 0) { // Errrors contient des données ?
+        $modal = './modals/errors.php'; // Oui, on affiche le modal Error
+    }
+};
+
+if(isset($_GET['success'])) { // Est-ce que $_GET['success'] est définie ?
+    $modal = './modals/success.php'; // Oui, on affiche le modal Success
+};
+
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +24,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
 </head>
 <body>
-    <main class="container">
+    <main class="container">    
+        <?php $modal && include $modal; ?>
+
         <h1>Coach Sportif</h1>
         <p>Bienvenue sur ma page de prise de RDV</p>
 
@@ -22,7 +36,7 @@
                     Remplissez le formulaire ci-dessous pour réserver votre séance de sport
                 </p>
             </header>
-            <form action="/process.php" method="POST">
+            <form action="./utils/process.php" method="POST">
                 <fieldset>
                     <legend>Informations de votre séance</legend>
                     <label for="date">Date</label>
